@@ -14,7 +14,7 @@ from .exceptions import (
 )
 from .models import QueryRequest, QueryResponse, Citation, UsageStats, Plan, QueryFilters, PlanInfo
 
-__version__ = "0.1.6"
+__version__ = "0.1.7"
 
 __all__ = [
     "BrainusAI",
