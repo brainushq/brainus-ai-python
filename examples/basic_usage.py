@@ -1,19 +1,12 @@
 """Basic usage example for the Brainus AI Python SDK."""
 
 import asyncio
-import os
 from brainus_ai import BrainusAI
 
 
 async def main():
-    # Get API key from environment variable
-    api_key = os.getenv("BRAINUS_API_KEY")
-    if not api_key:
-        print("Error: BRAINUS_API_KEY environment variable not set")
-        return
-
-    # Initialize the client
-    async with BrainusAI(api_key=api_key) as client:
+    # Initialize client — reads BRAINUS_API_KEY from environment automatically
+    async with BrainusAI() as client:
         # Example 1: Query with no filters
         print("Example 1: Simple query")
         print("-" * 50)

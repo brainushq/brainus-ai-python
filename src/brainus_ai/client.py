@@ -2,8 +2,12 @@
 
 from __future__ import annotations
 
+import os
+
 import httpx
 from typing import Any
+
+_SDK_VERSION = "0.1.7"
 
 from .exceptions import (
     AuthenticationError,
@@ -30,7 +34,7 @@ class BrainusAI:
 
     def __init__(
         self,
-        api_key: str,
+        api_key: str | None = None,
         base_url: str = "https://api.brainus.lk",
         timeout: float = 30.0,
         max_retries: int = 3,
@@ -39,13 +43,18 @@ class BrainusAI:
         Initialize the Brainus AI client.
 
         Args:
-            api_key: Your Brainus AI API key (brainus_...)
+            api_key: Your Brainus AI API key (brainus_...). If not provided,
+                reads from the BRAINUS_API_KEY environment variable.
             base_url: Base URL for the API (default: production gateway)
             timeout: Request timeout in seconds
             max_retries: Maximum number of retry attempts for failed requests
         """
+        if api_key is None:
+            api_key = os.environ.get("BRAINUS_API_KEY")
         if not api_key or not api_key.startswith("brainus_"):
-            raise AuthenticationError("Invalid API key format. Expected format: brainus_...")
+            raise AuthenticationError(
+                "Invalid API key. Pass api_key or set the BRAINUS_API_KEY environment variable."
+            )
 
         self.api_key = api_key
         self.base_url = base_url.rstrip("/")
@@ -57,7 +66,7 @@ class BrainusAI:
             headers={
                 "X-API-Key": self.api_key,
                 "Content-Type": "application/json",
-                "User-Agent": "brainus-ai-python/0.1.0",
+                "User-Agent": f"brainus-ai-python/{_SDK_VERSION}",
             },
             timeout=httpx.Timeout(timeout),
             transport=httpx.AsyncHTTPTransport(retries=max_retries),

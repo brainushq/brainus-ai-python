@@ -53,3 +53,18 @@ class TestClientInit:
     def test_custom_max_retries(self):
         client = BrainusAI(api_key="brainus_abc123", max_retries=5)
         assert client.max_retries == 5
+
+    def test_reads_api_key_from_env(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("BRAINUS_API_KEY", "brainus_from_env_123")
+        client = BrainusAI()
+        assert client.api_key == "brainus_from_env_123"
+
+    def test_explicit_key_takes_priority_over_env(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("BRAINUS_API_KEY", "brainus_from_env_123")
+        client = BrainusAI(api_key="brainus_explicit_456")
+        assert client.api_key == "brainus_explicit_456"
+
+    def test_raises_when_no_key_and_no_env(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.delenv("BRAINUS_API_KEY", raising=False)
+        with pytest.raises(AuthenticationError):
+            BrainusAI()
