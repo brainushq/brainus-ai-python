@@ -14,7 +14,6 @@ Usage:
 
 from flask import Flask, request, jsonify
 from brainus_ai import BrainusAI, RateLimitError
-import os
 import asyncio
 
 app = Flask(__name__)
@@ -35,7 +34,7 @@ async def query_with_retry(query, store_id="default", max_retries=3):
     Raises:
         RateLimitError: If max retries exceeded
     """
-    async with BrainusAI(api_key=os.getenv("BRAINUS_API_KEY")) as client:
+    async with BrainusAI() as client:
         for attempt in range(max_retries):
             try:
                 return await client.query(query=query, store_id=store_id)

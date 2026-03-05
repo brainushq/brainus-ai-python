@@ -20,7 +20,6 @@ from brainus_ai import (
     APIError
 )
 import asyncio
-import os
 from typing import Optional
 
 
@@ -35,7 +34,7 @@ async def basic_error_handling(query: str) -> Optional[dict]:
         Result dict or None on error
     """
     try:
-        async with BrainusAI(api_key=os.getenv("BRAINUS_API_KEY")) as client:
+        async with BrainusAI() as client:
             result = await client.query(query=query, store_id="default")
             return {
                 'answer': result.answer,
@@ -57,7 +56,7 @@ async def robust_query(query: str, max_retries: int = 3) -> Optional[dict]:
     Returns:
         Result dict or None on permanent failure
     """
-    async with BrainusAI(api_key=os.getenv("BRAINUS_API_KEY")) as client:
+    async with BrainusAI() as client:
         for attempt in range(max_retries):
             try:
                 result = await client.query(query=query, store_id="default")
@@ -138,7 +137,7 @@ async def query_with_fallback(query: str, fallback_answer: str = "Unable to proc
         Result dict with answer (from API or fallback)
     """
     try:
-        async with BrainusAI(api_key=os.getenv("BRAINUS_API_KEY")) as client:
+        async with BrainusAI() as client:
             result = await client.query(query=query, store_id="default")
             return {
                 'answer': result.answer,
@@ -184,7 +183,7 @@ async def validate_and_query(query: str) -> Optional[dict]:
     
     # Query with error handling
     try:
-        async with BrainusAI(api_key=os.getenv("BRAINUS_API_KEY")) as client:
+        async with BrainusAI() as client:
             result = await client.query(query=query, store_id="default")
             return {
                 'answer': result.answer,
@@ -210,7 +209,7 @@ async def batch_with_error_handling(queries: list[str]) -> list[dict]:
     """
     results = []
     
-    async with BrainusAI(api_key=os.getenv("BRAINUS_API_KEY")) as client:
+    async with BrainusAI() as client:
         for i, query in enumerate(queries, 1):
             print(f"\n[{i}/{len(queries)}] Processing: {query[:50]}...")
             

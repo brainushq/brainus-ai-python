@@ -20,7 +20,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Dict, List
 from brainus_ai import BrainusAI, BrainusError
-import os
 from datetime import datetime
 
 app = FastAPI(
@@ -89,7 +88,7 @@ async def query_endpoint(
         HTTPException: On API errors
     """
     try:
-        async with BrainusAI(api_key=os.getenv("BRAINUS_API_KEY")) as client:
+        async with BrainusAI() as client:
             result = await client.query(
                 query=request.query,
                 store_id=request.store_id,

@@ -16,7 +16,6 @@ from brainus_ai import BrainusAI
 import pandas as pd
 from typing import List, Dict
 import asyncio
-import os
 from datetime import datetime
 
 
@@ -41,7 +40,7 @@ async def process_batch(
     results = []
     total_batches = (len(queries) + batch_size - 1) // batch_size
 
-    async with BrainusAI(api_key=os.getenv("BRAINUS_API_KEY")) as client:
+    async with BrainusAI() as client:
         for batch_num, i in enumerate(range(0, len(queries), batch_size), 1):
             batch = queries[i:i + batch_size]
             
@@ -150,7 +149,7 @@ async def process_with_progress(queries: List[str]) -> List[Dict]:
     """
     results = []
     
-    async with BrainusAI(api_key=os.getenv("BRAINUS_API_KEY")) as client:
+    async with BrainusAI() as client:
         for i, query in enumerate(queries, 1):
             try:
                 print(f"[{i}/{len(queries)}] Processing: {query[:50]}...")

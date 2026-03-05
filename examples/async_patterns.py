@@ -13,7 +13,6 @@ Usage:
 
 import asyncio
 from brainus_ai import BrainusAI
-import os
 from typing import List, Dict
 
 
@@ -28,7 +27,7 @@ async def query_single(query: str, store_id: str = "default") -> Dict:
     Returns:
         Dict with query and result
     """
-    async with BrainusAI(api_key=os.getenv("BRAINUS_API_KEY")) as client:
+    async with BrainusAI() as client:
         result = await client.query(query=query, store_id=store_id)
         return {
             'query': query,
@@ -51,7 +50,7 @@ async def query_multiple(queries: List[str], store_id: str = "default") -> List[
     Returns:
         List of results
     """
-    async with BrainusAI(api_key=os.getenv("BRAINUS_API_KEY")) as client:
+    async with BrainusAI() as client:
         tasks = [
             client.query(query=q, store_id=store_id)
             for q in queries
@@ -103,7 +102,7 @@ async def query_with_fallback(query: str, fallback_stores: List[str]) -> Dict:
     Returns:
         Result from first successful store
     """
-    async with BrainusAI(api_key=os.getenv("BRAINUS_API_KEY")) as client:
+    async with BrainusAI() as client:
         for store_id in fallback_stores:
             try:
                 result = await client.query(query=query, store_id=store_id)
