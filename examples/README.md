@@ -377,7 +377,7 @@ if result.citations:
 ## Next Steps
 
 - **[Python SDK Documentation](../src/brainus_ai/)** - Complete SDK reference
-- **[GitHub Repository](https://github.com/brainuslk/brainus-ai-python)** - Source code and issues
+- **[GitHub Repository](https://github.com/brainushq/brainus-ai-python)** - Source code and issues
 - **[API Documentation](https://brainus.ai/docs)** - Full API documentation
 
 ---
@@ -387,7 +387,7 @@ if result.citations:
 If you encounter any issues or have questions:
 
 - 📧 Email: developers@brainus.lk
-- 🐛 Issues: [GitHub Issues](https://github.com/brainuslk/brainus-ai-python/issues)
+- 🐛 Issues: [GitHub Issues](https://github.com/brainushq/brainus-ai-python/issues)
 - 📖 Docs: [brainus.ai/docs](https://developers.brainus.lk/docs)
 
 ---
